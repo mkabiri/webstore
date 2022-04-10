@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="customer">
+      <h2 data-cy="customerDetailsHeading"><span jhiTranslate="webStoreApp.customer.detail.title">Customer</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ customer.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.name">Name</span></dt>
+        <dd>
+          <span>{{ customer.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ customer.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.gender">Gender</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'webStoreApp.Gender.' + customer.gender }}">{{ customer.gender }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.addressLine1">Address Line 1</span></dt>
+        <dd>
+          <span>{{ customer.addressLine1 }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.addressLine2">Address Line 2</span></dt>
+        <dd>
+          <span>{{ customer.addressLine2 }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.addressLine3">Address Line 3</span></dt>
+        <dd>
+          <span>{{ customer.addressLine3 }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.addressLine4">Address Line 4</span></dt>
+        <dd>
+          <span>{{ customer.addressLine4 }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.townCity">Town City</span></dt>
+        <dd>
+          <span>{{ customer.townCity }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.county">County</span></dt>
+        <dd>
+          <span>{{ customer.county }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.zip">Zip</span></dt>
+        <dd>
+          <span>{{ customer.zip }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.customer.user">User</span></dt>
+        <dd>
+          <span>{{ customer.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/customer', customer.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

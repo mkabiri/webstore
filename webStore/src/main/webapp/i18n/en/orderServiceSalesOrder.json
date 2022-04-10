@@ -1,0 +1,35 @@
+{
+  "webStoreApp": {
+    "orderServiceSalesOrder": {
+      "home": {
+        "title": "Sales Orders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Sales Order",
+        "createOrEditLabel": "Create or edit a Sales Order",
+        "notFound": "No Sales Orders found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Sales Order {{ id }}?"
+      },
+      "detail": {
+        "title": "Sales Order"
+      },
+      "id": "ID",
+      "salesOrderNumber": "Sales Order Number",
+      "customerId": "Customer Id",
+      "placed": "Placed",
+      "cancelled": "Cancelled",
+      "shipped": "Shipped",
+      "completed": "Completed",
+      "status": "Status",
+      "orderItems": "Order Items"
+    }
+  },
+  "orderServiceApp": {
+    "orderServiceSalesOrder": {
+      "created": "A new Sales Order is created with identifier {{ param }}",
+      "updated": "A Sales Order is updated with identifier {{ param }}",
+      "deleted": "A Sales Order is deleted with identifier {{ param }}"
+    }
+  }
+}

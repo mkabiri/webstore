@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="photo">
+      <h2 data-cy="photoDetailsHeading"><span jhiTranslate="webStoreApp.storeServicePhoto.detail.title">Photo</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ photo.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServicePhoto.photo">Photo</span></dt>
+        <dd>
+          <div *ngIf="photo.photo">
+            <a (click)="openFile(photo.photo, photo.photoContentType)">
+              <img [src]="'data:' + photo.photoContentType + ';base64,' + photo.photo" style="max-width: 100%" alt="photo image" />
+            </a>
+            {{ photo.photoContentType }}, {{ byteSize(photo.photo) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServicePhoto.product">Product</span></dt>
+        <dd>
+          <div *ngIf="photo.product">
+            <a [routerLink]="['/product', photo.product?.id, 'view']">{{ photo.product?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/photo', photo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

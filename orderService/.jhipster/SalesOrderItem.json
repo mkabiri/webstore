@@ -1,0 +1,68 @@
+{
+  "applications": ["webStore", "orderService"],
+  "changelogDate": "20220410015444",
+  "clientRootFolder": "orderService",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "sales_order_item",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sku",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "taxable",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "grosWeight",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "shipped",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "delivered",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "SalesOrderItemStatus",
+      "fieldValues": "PENDING,DELIVERED,OUTOFSTOCK,COMPLAINED"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "unitPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "orderService",
+  "name": "SalesOrderItem",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "salesOrderNumber",
+      "otherEntityName": "salesOrder",
+      "otherEntityRelationshipName": "orderItems",
+      "relationshipName": "salesOrder",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

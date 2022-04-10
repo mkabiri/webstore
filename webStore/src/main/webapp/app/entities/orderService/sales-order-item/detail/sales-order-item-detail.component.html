@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="salesOrderItem">
+      <h2 data-cy="salesOrderItemDetailsHeading">
+        <span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.detail.title">Sales Order Item</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.name">Name</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.sku">Sku</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.sku }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.taxable">Taxable</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.taxable }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.grosWeight">Gros Weight</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.grosWeight }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.shipped">Shipped</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.shipped | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.delivered">Delivered</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.delivered | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'webStoreApp.SalesOrderItemStatus.' + salesOrderItem.status }}">{{ salesOrderItem.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.quantity">Quantity</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.quantity }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.unitPrice">Unit Price</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.unitPrice }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.amount">Amount</span></dt>
+        <dd>
+          <span>{{ salesOrderItem.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.orderServiceSalesOrderItem.salesOrder">Sales Order</span></dt>
+        <dd>
+          <div *ngIf="salesOrderItem.salesOrder">
+            <a [routerLink]="['/sales-order', salesOrderItem.salesOrder?.id, 'view']">{{ salesOrderItem.salesOrder?.salesOrderNumber }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/sales-order-item', salesOrderItem.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

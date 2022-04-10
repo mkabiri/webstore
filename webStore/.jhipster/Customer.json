@@ -1,0 +1,68 @@
+{
+  "applications": ["webStore"],
+  "changelogDate": "20220410015644",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "customer",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValues": "FEMALE,MALE,DIVERSE"
+    },
+    {
+      "fieldName": "addressLine1",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "addressLine2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "addressLine3",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "addressLine4",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "townCity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "county",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "zip",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Customer",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "customer",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

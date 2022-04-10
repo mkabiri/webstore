@@ -1,0 +1,128 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductHeading">
+    <span jhiTranslate="webStoreApp.storeServiceProduct.home.title">Products</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="webStoreApp.storeServiceProduct.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product"
+        [routerLink]="['/product/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="webStoreApp.storeServiceProduct.home.createLabel"> Create a new Product </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="products?.length === 0">
+    <span jhiTranslate="webStoreApp.storeServiceProduct.home.notFound">No products found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="products && products.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="name">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sku">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.sku">Sku</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="srp">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.srp">Srp</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="taxable">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.taxable">Taxable</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="salesUnit">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.salesUnit">Sales Unit</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="salesQuantity">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.salesQuantity">Sales Quantity</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.status">Status</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="grosWeight">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.grosWeight">Gros Weight</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="netWeight">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.netWeight">Net Weight</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="length">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.length">Length</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="width">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.width">Width</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="height">
+            <span jhiTranslate="webStoreApp.storeServiceProduct.height">Height</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let product of products; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a>
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.srp }}</td>
+          <td>{{ product.taxable }}</td>
+          <td jhiTranslate="{{ 'webStoreApp.UnitOfMeasurement.' + product.salesUnit }}">{{ product.salesUnit }}</td>
+          <td>{{ product.salesQuantity }}</td>
+          <td jhiTranslate="{{ 'webStoreApp.ProductStatus.' + product.status }}">{{ product.status }}</td>
+          <td>{{ product.grosWeight }}</td>
+          <td>{{ product.netWeight }}</td>
+          <td>{{ product.length }}</td>
+          <td>{{ product.width }}</td>
+          <td>{{ product.height }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/product', product.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/product', product.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(product)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

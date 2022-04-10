@@ -1,0 +1,143 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-sales-order-item-heading"
+        data-cy="SalesOrderItemCreateUpdateHeading"
+        jhiTranslate="webStoreApp.orderServiceSalesOrderItem.home.createOrEditLabel"
+      >
+        Create or edit a Sales Order Item
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.sku" for="field_sku">Sku</label>
+          <input type="text" class="form-control" name="sku" id="field_sku" data-cy="sku" formControlName="sku" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.taxable" for="field_taxable">Taxable</label>
+          <input type="checkbox" class="form-check" name="taxable" id="field_taxable" data-cy="taxable" formControlName="taxable" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.grosWeight" for="field_grosWeight"
+            >Gros Weight</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="grosWeight"
+            id="field_grosWeight"
+            data-cy="grosWeight"
+            formControlName="grosWeight"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.shipped" for="field_shipped">Shipped</label>
+          <div class="input-group">
+            <input
+              id="field_shipped"
+              data-cy="shipped"
+              type="text"
+              class="form-control"
+              name="shipped"
+              ngbDatepicker
+              #shippedDp="ngbDatepicker"
+              formControlName="shipped"
+            />
+            <button type="button" class="btn btn-secondary" (click)="shippedDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.delivered" for="field_delivered">Delivered</label>
+          <div class="input-group">
+            <input
+              id="field_delivered"
+              data-cy="delivered"
+              type="text"
+              class="form-control"
+              name="delivered"
+              ngbDatepicker
+              #deliveredDp="ngbDatepicker"
+              formControlName="delivered"
+            />
+            <button type="button" class="btn btn-secondary" (click)="deliveredDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'webStoreApp.SalesOrderItemStatus.null' | translate }}</option>
+            <option *ngFor="let salesOrderItemStatus of salesOrderItemStatusValues" [value]="salesOrderItemStatus">
+              {{ 'webStoreApp.SalesOrderItemStatus.' + salesOrderItemStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.quantity" for="field_quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.unitPrice" for="field_unitPrice">Unit Price</label>
+          <input type="number" class="form-control" name="unitPrice" id="field_unitPrice" data-cy="unitPrice" formControlName="unitPrice" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.amount" for="field_amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="webStoreApp.orderServiceSalesOrderItem.salesOrder" for="field_salesOrder"
+            >Sales Order</label
+          >
+          <select class="form-control" id="field_salesOrder" data-cy="salesOrder" name="salesOrder" formControlName="salesOrder">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                salesOrderOption.id === editForm.get('salesOrder')!.value?.id ? editForm.get('salesOrder')!.value : salesOrderOption
+              "
+              *ngFor="let salesOrderOption of salesOrdersSharedCollection; trackBy: trackSalesOrderById"
+            >
+              {{ salesOrderOption.salesOrderNumber }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
