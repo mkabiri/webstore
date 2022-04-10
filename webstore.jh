@@ -1,0 +1,152 @@
+application {
+  config {
+    baseName webStore
+    applicationType gateway
+    serverPort 9042
+    authenticationType oauth2
+    packageName	com.mycompany.store.web
+    searchEngine elasticsearch
+    serviceDiscoveryType eureka
+    testFrameworks [protractor]
+    languages [en, de]
+    nativeLanguage en
+	messageBroker kafka    
+  }
+  entities *
+}
+
+application {
+  config {
+    baseName storeService
+    applicationType microservice
+    serverPort 8083
+    authenticationType oauth2
+    packageName	com.mycompany.storeservice
+    searchEngine elasticsearch
+    serviceDiscoveryType eureka
+    languages [en, de]
+    nativeLanguage en
+	messageBroker kafka 
+	   
+  }
+  entities Product, Photo
+}
+
+application {
+  config {
+    baseName orderService
+    applicationType microservice
+    serverPort 8084
+    authenticationType oauth2
+    packageName	com.mycompany.order
+    searchEngine elasticsearch
+    serviceDiscoveryType eureka
+    languages [en, de]
+    nativeLanguage en
+    messageBroker kafka    
+  }
+  entities SalesOrder, SalesOrderItem
+}
+
+deployment {
+  deploymentType docker-compose
+  appsFolders [storeService, orderService, webStore]
+  dockerRepositoryName "mkabiri"
+}
+
+enum Gender {
+   FEMALE, MALE, DIVERSE
+}
+
+entity Customer {
+    name String required minlength(2)
+    phoneNumber String
+    gender Gender
+    addressLine1 String
+    addressLine2 String
+    addressLine3 String
+    addressLine4 String
+    townCity String
+    county String
+    zip String
+}
+
+enum SalesOrderStatus {
+    PENDING, CANCELLED, SHIPPED, COMPLETED
+}
+
+entity SalesOrder {
+    salesOrderNumber String
+    customerId String
+    placed Instant
+    cancelled Instant
+    shipped Instant
+    completed Instant
+    status SalesOrderStatus
+}
+
+enum SalesOrderItemStatus {
+    PENDING, DELIVERED, OUTOFSTOCK, COMPLAINED
+}
+
+entity SalesOrderItem {
+    name String
+    sku String
+    taxable Boolean
+    grosWeight Double
+    shipped LocalDate
+    delivered LocalDate
+    status SalesOrderItemStatus
+    quantity BigDecimal
+    unitPrice BigDecimal
+    amount BigDecimal
+}
+
+enum ProductStatus {
+    ONSALE, LOCKED, OOUTOFSTOCK, INREPLENISHMENT
+}
+
+enum UnitOfMeasurement {
+    PIECE, KILOGRAM, GRAM, LITER 
+}
+
+entity Product {
+    name String required minlength(2)
+    sku String required minlength(6)
+    description String
+    srp BigDecimal
+    taxable Boolean
+    salesUnit UnitOfMeasurement
+    salesQuantity BigDecimal
+    status ProductStatus
+    grosWeight Double
+    netWeight Double
+    length Double
+    width Double
+    height Double
+}
+
+entity Photo {
+    photo ImageBlob
+} 
+
+relationship ManyToOne {
+    Customer{user(login)} to User
+}
+
+relationship OneToMany {
+    SalesOrder{orderItems} to 
+      SalesOrderItem{salesOrder(salesOrderNumber)}
+    Product{photos} to Photo{product(name)}
+}
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all
+service all with serviceClass
+
+paginate Product with infinite-scroll
+
+microservice Product, Photo with storeService
+microservice SalesOrder, SalesOrderItem with orderService
