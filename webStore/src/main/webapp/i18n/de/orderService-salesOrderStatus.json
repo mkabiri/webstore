@@ -1,0 +1,11 @@
+{
+  "webStoreApp": {
+    "SalesOrderStatus": {
+      "null": "",
+      "PENDING": "PENDING",
+      "CANCELLED": "CANCELLED",
+      "SHIPPED": "SHIPPED",
+      "COMPLETED": "COMPLETED"
+    }
+  }
+}

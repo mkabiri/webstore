@@ -1,0 +1,35 @@
+{
+  "webStoreApp": {
+    "orderServiceSalesOrder": {
+      "home": {
+        "title": "Sales Orders",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Sales Order erstellen",
+        "createOrEditLabel": "Sales Order erstellen oder bearbeiten",
+        "notFound": "Keine Sales Orders gefunden"
+      },
+      "delete": {
+        "question": "Soll Sales Order {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Sales Order"
+      },
+      "id": "ID",
+      "salesOrderNumber": "Sales Order Number",
+      "customerId": "Customer Id",
+      "placed": "Placed",
+      "cancelled": "Cancelled",
+      "shipped": "Shipped",
+      "completed": "Completed",
+      "status": "Status",
+      "orderItems": "Order Items"
+    }
+  },
+  "orderServiceApp": {
+    "orderServiceSalesOrder": {
+      "created": "Sales Order erstellt mit ID {{ param }}",
+      "updated": "Sales Order aktualisiert mit ID {{ param }}",
+      "deleted": "Sales Order gelöscht mit ID {{ param }}"
+    }
+  }
+}

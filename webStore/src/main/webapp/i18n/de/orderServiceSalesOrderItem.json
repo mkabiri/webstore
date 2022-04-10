@@ -1,0 +1,38 @@
+{
+  "webStoreApp": {
+    "orderServiceSalesOrderItem": {
+      "home": {
+        "title": "Sales Order Items",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Sales Order Item erstellen",
+        "createOrEditLabel": "Sales Order Item erstellen oder bearbeiten",
+        "notFound": "Keine Sales Order Items gefunden"
+      },
+      "delete": {
+        "question": "Soll Sales Order Item {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Sales Order Item"
+      },
+      "id": "ID",
+      "name": "Name",
+      "sku": "Sku",
+      "taxable": "Taxable",
+      "grosWeight": "Gros Weight",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "status": "Status",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "amount": "Amount",
+      "salesOrder": "Sales Order"
+    }
+  },
+  "orderServiceApp": {
+    "orderServiceSalesOrderItem": {
+      "created": "Sales Order Item erstellt mit ID {{ param }}",
+      "updated": "Sales Order Item aktualisiert mit ID {{ param }}",
+      "deleted": "Sales Order Item gelöscht mit ID {{ param }}"
+    }
+  }
+}

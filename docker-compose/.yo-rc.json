@@ -1,0 +1,13 @@
+{
+  "generator-jhipster": {
+    "appsFolders": ["storeService", "orderService", "webStore"],
+    "clusteredDbApps": [],
+    "deploymentType": "docker-compose",
+    "directoryPath": "../",
+    "dockerRepositoryName": "mkabiri",
+    "gatewayType": "SpringCloudGateway",
+    "jwtSecretKey": "OTQ2ODZlMTQwM2E2YjY5NDZkZmNlZmU2NjU0OGU0NDhmMWRhYjViMjVmNjRjZmRjYzMzYmY0NmUwZmVmNDY3ZTdmYWRhZjBhZWI5YTY1NzA2MGRjZDYyYzdkMDRmMDg1NjdkYg==",
+    "monitoring": "no",
+    "serviceDiscoveryType": "eureka"
+  }
+}

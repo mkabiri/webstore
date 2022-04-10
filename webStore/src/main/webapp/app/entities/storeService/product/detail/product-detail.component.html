@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="product">
+      <h2 data-cy="productDetailsHeading"><span jhiTranslate="webStoreApp.storeServiceProduct.detail.title">Product</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ product.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.name">Name</span></dt>
+        <dd>
+          <span>{{ product.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.sku">Sku</span></dt>
+        <dd>
+          <span>{{ product.sku }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.description">Description</span></dt>
+        <dd>
+          <span>{{ product.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.srp">Srp</span></dt>
+        <dd>
+          <span>{{ product.srp }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.taxable">Taxable</span></dt>
+        <dd>
+          <span>{{ product.taxable }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.salesUnit">Sales Unit</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'webStoreApp.UnitOfMeasurement.' + product.salesUnit }}">{{ product.salesUnit }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.salesQuantity">Sales Quantity</span></dt>
+        <dd>
+          <span>{{ product.salesQuantity }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'webStoreApp.ProductStatus.' + product.status }}">{{ product.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.grosWeight">Gros Weight</span></dt>
+        <dd>
+          <span>{{ product.grosWeight }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.netWeight">Net Weight</span></dt>
+        <dd>
+          <span>{{ product.netWeight }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.length">Length</span></dt>
+        <dd>
+          <span>{{ product.length }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.width">Width</span></dt>
+        <dd>
+          <span>{{ product.width }}</span>
+        </dd>
+        <dt><span jhiTranslate="webStoreApp.storeServiceProduct.height">Height</span></dt>
+        <dd>
+          <span>{{ product.height }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

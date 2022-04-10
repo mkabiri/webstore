@@ -1,0 +1,11 @@
+{
+  "webStoreApp": {
+    "UnitOfMeasurement": {
+      "null": "",
+      "PIECE": "PIECE",
+      "KILOGRAM": "KILOGRAM",
+      "GRAM": "GRAM",
+      "LITER": "LITER"
+    }
+  }
+}

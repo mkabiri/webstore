@@ -1,0 +1,29 @@
+{
+  "webStoreApp": {
+    "storeServicePhoto": {
+      "home": {
+        "title": "Photos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Photo",
+        "createOrEditLabel": "Create or edit a Photo",
+        "notFound": "No Photos found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Photo {{ id }}?"
+      },
+      "detail": {
+        "title": "Photo"
+      },
+      "id": "ID",
+      "photo": "Photo",
+      "product": "Product"
+    }
+  },
+  "storeServiceApp": {
+    "storeServicePhoto": {
+      "created": "A new Photo is created with identifier {{ param }}",
+      "updated": "A Photo is updated with identifier {{ param }}",
+      "deleted": "A Photo is deleted with identifier {{ param }}"
+    }
+  }
+}

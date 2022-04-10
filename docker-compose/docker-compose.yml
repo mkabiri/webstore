@@ -1,0 +1,186 @@
+services:
+  storeservice:
+    image: storeservice
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://storeservice-postgresql:5432/storeService
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://storeservice-postgresql:5432/storeService
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/auth/realms/jhipster
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=internal
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=internal
+      - JHIPSTER_SLEEP=30
+      - SPRING_ELASTICSEARCH_URIS=http://storeservice-elasticsearch:9200
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka:9092
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+  storeservice-postgresql:
+    image: postgres:14.2
+    environment:
+      - POSTGRES_USER=storeService
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  storeservice-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+
+  orderservice:
+    image: orderservice
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://orderservice-postgresql:5432/orderService
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://orderservice-postgresql:5432/orderService
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/auth/realms/jhipster
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=internal
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=internal
+      - JHIPSTER_SLEEP=30
+      - SPRING_ELASTICSEARCH_URIS=http://orderservice-elasticsearch:9200
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka:9092
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+  orderservice-postgresql:
+    image: postgres:14.2
+    environment:
+      - POSTGRES_USER=orderService
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  orderservice-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+
+  webstore:
+    image: webstore
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_R2DBC_URL=r2dbc:postgresql://webstore-postgresql:5432/webStore
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://webstore-postgresql:5432/webStore
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/auth/realms/jhipster
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=web_app
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=web_app
+      - JHIPSTER_SLEEP=60
+      - SPRING_ELASTICSEARCH_URIS=http://webstore-elasticsearch:9200
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka:9092
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+    ports:
+      - "8080:9042"
+  webstore-postgresql:
+    image: postgres:14.2
+    environment:
+      - POSTGRES_USER=webStore
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  webstore-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.7
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
+  kafka:
+    image: confluentinc/cp-kafka:5.5.7
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      #ports:
+      # - 9092:9092 # Uncomment to make Kafka available externally
+  jhipster-registry:
+    image: jhipster/jhipster-registry:v7.3.0
+    volumes:
+      - ./central-server-config:/central-config
+    # By default the JHipster Registry runs with the "dev" and "native"
+    # Spring profiles.
+    # "native" profile means the filesystem is used to store data, see
+    # http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - JHIPSTER_SLEEP=20
+      - SPRING_PROFILES_ACTIVE=dev,oauth2
+      - SPRING_SECURITY_USER_PASSWORD=admin
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config
+      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
+      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
+      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config
+      # For Keycloak to work, you need to add '127.0.0.1 keycloak' to your hosts file
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/auth/realms/jhipster
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=jhipster-registry
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=jhipster-registry
+    ports:
+      - 8761:8761
+  keycloak:
+    image: jboss/keycloak:16.1.0
+    command:
+      [
+        "-b",
+        "0.0.0.0",
+        "-Dkeycloak.migration.action=import",
+        "-Dkeycloak.migration.provider=dir",
+        "-Dkeycloak.migration.dir=/opt/jboss/keycloak/realm-config",
+        "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING",
+        "-Djboss.socket.binding.port-offset=1000",
+        "-Dkeycloak.profile.feature.upload_scripts=enabled",
+      ]
+    volumes:
+      - ./realm-config:/opt/jboss/keycloak/realm-config
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2
+    ports:
+      - 9080:9080
+      - 9443:9443
+      - 10990:10990
